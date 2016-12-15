@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -59,8 +60,13 @@ func (nc *NatsClient) Request(ctx *Context, step ScenarioStep, dryRun bool) {
 	if err != nil {
 		fmt.Printf("rsp ERROR: [%s]\n", err)
 	} else {
-		fmt.Printf("rsp: [%s]\n[%s]\n", string(response.Subject), string(response.Data))
-
+		fmt.Printf("rsp SUBJECT: [%s]\n", string(response.Subject))
+		prettyData := &bytes.Buffer{}
+		if err := json.Indent(prettyData, response.Data, "", "\t"); err == nil {
+			fmt.Printf("rsp BODY: [%s]\n", prettyData.String())
+		} else {
+			fmt.Printf("rsp BODY: [%s]\n", string(response.Data))
+		}
 	}
 }
 
