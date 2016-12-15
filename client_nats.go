@@ -63,9 +63,9 @@ func (nc *NatsClient) Request(ctx *Context, step ScenarioStep, dryRun bool) {
 		fmt.Printf("rsp SUBJECT: [%s]\n", string(response.Subject))
 		prettyData := &bytes.Buffer{}
 		if err := json.Indent(prettyData, response.Data, "", "\t"); err == nil {
-			fmt.Printf("rsp BODY: [%s]\n", prettyData.String())
+			fmt.Printf("rsp DATA: [%s]\n", prettyData.String())
 		} else {
-			fmt.Printf("rsp BODY: [%s]\n", string(response.Data))
+			fmt.Printf("rsp DATA: [%s]\n", string(response.Data))
 		}
 	}
 }
